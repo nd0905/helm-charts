@@ -1,0 +1,69 @@
+{{- $root := . -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "adguard.fullname" . }}
+  labels:
+{{ include "adguard.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "adguard.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "adguard.fullname" . }}
+    spec:
+      initContainers:
+      - name: init-adguard-conf
+        image: alpine
+        command: ['sh', '-c', "cat /tmp/ag-conf/AdGuardHome.yaml > {{ .Values.storage.config.path }}/AdGuardHome.yaml"]
+        volumeMounts:
+        {{- range $name, $options:= .Values.storage }}
+        - mountPath: {{ $options.path }}
+          name: {{ $name }}-storage
+        {{- end}}
+        - mountPath: /tmp/ag-conf
+          name: conf-volume
+      containers:
+      - name: {{ template "adguard.name" . }}
+        image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        ports:
+        {{- range $name, $options:= .Values.service.ports }}
+        - name: {{ $name }}
+          containerPort: {{ $options.target_port }}
+          protocol: {{ $options.protocol }}
+        {{- end }}
+        volumeMounts:
+        {{- range $name, $options:= .Values.storage }}
+        - mountPath: {{ $options.path }}
+          name: {{ $name }}-storage
+        {{- end}}
+      {{- with .Values.deployment.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      volumes:
+      {{- range $name, $options:= .Values.storage }}
+      - name: {{ $name }}-storage
+        persistentVolumeClaim:
+          claimName: {{ template "adguard.fullname" $ }}-{{ $name }}
+      {{- end}}
+      - name: conf-volume
+        configMap:
+          name: adguard-config
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.deployment.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
