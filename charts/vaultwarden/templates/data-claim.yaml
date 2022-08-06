@@ -1,0 +1,16 @@
+{{- if .Values.storage.enabled -}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "vaultwarden.fullname" . }}-pvc
+  labels:
+{{ include "vaultwarden.labels" . | indent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage.size }}
+status: {}
+{{- end }}

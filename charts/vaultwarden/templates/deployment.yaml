@@ -1,0 +1,85 @@
+{{- $root := . -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "vaultwarden.fullname" . }}
+  labels:
+{{ include "vaultwarden.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "vaultwarden.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "vaultwarden.fullname" . }}
+    spec:
+      {{- if .Values.securityContext.enabled }}
+      securityContext:
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+      {{- end }}
+      containers:
+      - name: {{ template "vaultwarden.name" . }}
+        image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        env:
+{{- range $key, $val := .Values.bitwarden }}
+{{ $key | upper | indent 10}}: {{ $val | quote }}
+{{- end}}
+        {{- if .Values.deployment.secrets }}
+        {{- range .Values.deployment.secrets }}
+        - secretRef:
+            name: {{ . }}
+        {{- end }}
+        {{- end }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.bitwarden.rocket_port }}
+          protocol: TCP
+        {{- if .Values.bitwarden.websocket_enabled }}
+        - name: ws
+          containerPort: {{ .Values.bitwarden.websocket_port }}
+          protocol: TCP
+        {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+        {{- if .Values.securityContext.enabled }}
+        securityContext:
+          runAsNonRoot: {{ .Values.securityContext.runAsNonRoot }}
+          runAsUser: {{ .Values.securityContext.runAsUser }}
+        {{- end }}
+        {{ if .Values.storage.enabled -}}
+        volumeMounts:
+        - mountPath: {{ .Values.storage.path }}
+          name: data-storage
+        {{ end }}
+      {{- with .Values.deployment.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      {{ if .Values.storage.enabled -}}
+      volumes:
+      - name: data-storage
+        persistentVolumeClaim:
+         claimName: {{ template "vaultwarden.fullname" . }}-pvc
+      {{ end }}
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.deployment.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
