@@ -71,8 +71,6 @@ bitwarden:
   # # See: https://github.com/dani-garcia/vaultwarden#logging
   # log_file=/data/bitwarden.log
 
-
-
 deployment:
   # Image used for the deployment
   # See: https://www.github.com/dani-garcia/vaultwarden
@@ -101,7 +99,6 @@ service:
   type: LoadBalancer
   port: 80
   target_port: 8080
-
 
 # Settings regarding persistent storage
 # TODO: Support DATABASE_URL + ATTACHMENTS_FOLDER + ICON_CACHE_FOLDER

@@ -2,7 +2,7 @@ apiVersion: v1
 appVersion: 1.25.2
 description: A Helm chart to install vaultwarden
 name: vaultwarden
-version: 0.1.0
+version: 0.1.1
 home: https://github.com/nd0905/helm-charts
 maintainers:
 - name: nd0905

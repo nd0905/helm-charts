@@ -1,5 +1,5 @@
 # Kubernetes deployment via Helm
-Helm chart to deploy a fully functional and secure [`bitwarden_rs`](https://github.com/dani-garcia/bitwarden_rs) application in [Kubernetes](https://kubernetes.io/).
+Helm chart to deploy a fully functional and secure [`adguard home`](https://github.com/AdguardTeam/AdGuardHome) application in [Kubernetes](https://kubernetes.io/).
 
 ## Requirements
 Requires a Kubernetes cluster setup, with dns, storage and [Helm and Tiller](https://docs.helm.sh/) configured.
@@ -14,3 +14,6 @@ microk8s.status --wait-ready
 snap install helm --classic
 helm init --wait
 ```
+
+## Updating Values.yaml
+If there should be a change to the setup of the config for adguard look at https://github.com/AdguardTeam/AdGuardHome/wiki/Configuration

@@ -1,0 +1,16 @@
+{{- range $name, $options:= .Values.storage }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "adguard.fullname" $ }}-{{ $name }}
+  labels:
+{{ include "adguard.labels" $ | indent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $options.size }}
+status: {}
+{{- end }}
