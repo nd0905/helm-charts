@@ -4,5 +4,5 @@ metadata:
   name: {{ template "adguard.fullname" . }}-config
   labels:
 {{ include "adguard.labels" . | indent 4 }}
-data: 
+data:
   AdGuardHome.yaml: {{ .Values.config | quote }}

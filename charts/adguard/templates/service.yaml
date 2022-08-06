@@ -16,3 +16,4 @@ spec:
   {{- end }}
   selector:
     app: {{ template "adguard.fullname" . }}
+    
