@@ -1,0 +1,16 @@
+apiVersion: v1
+entries:
+  vaultwarden:
+  - apiVersion: v1
+    appVersion: 1.25.2
+    created: "2022-08-06T19:22:23.718043878Z"
+    description: A Helm chart to install vaultwarden
+    digest: 4de31ad96b261c777ccf5a1f6c275ae5a6096029c8ca19f76388781ac26db83f
+    home: https://github.com/nd0905/helm-charts
+    maintainers:
+    - name: nd0905
+    name: vaultwarden
+    urls:
+    - https://github.com/nd0905/helm-charts/releases/download/vaultwarden-0.1.0/vaultwarden-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-08-06T19:22:23.491210399Z"
