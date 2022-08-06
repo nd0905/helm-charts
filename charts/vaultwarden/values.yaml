@@ -71,10 +71,6 @@ bitwarden:
   # # See: https://github.com/dani-garcia/vaultwarden#logging
   # log_file=/data/bitwarden.log
 
-  # NOTE: HTTPS cannot be set here, as it is derived from the ingress configuration below.
-  # NOTE: DATA_FOLDER cannot be set here, as it is derived from the storage.path below.
-  # TODO: Support DATABASE_URL, ATTACHMENTS_FOLDER, ICON_CACHE_FOLDER
-  # TODO: Support fail2ban?
 
 
 deployment:
@@ -102,7 +98,7 @@ securityContext:
 
 # Should not be changed
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
   target_port: 8080
 
@@ -114,6 +110,6 @@ storage:
   # Whether storing persistent data is enabled or not
   enabled: true
   # Where to store persistent data
-  path: "/bw-data"
+  path: "/data"
   # The maximum size of the persisted data
   size: 100Mi

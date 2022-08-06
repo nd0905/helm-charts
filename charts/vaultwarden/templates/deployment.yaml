@@ -26,7 +26,8 @@ spec:
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         env:
 {{- range $key, $val := .Values.bitwarden }}
-{{ $key | upper | indent 10}}: {{ $val | quote }}
+          - name: {{ $key | upper }}
+            value: {{ $val | quote }}
 {{- end}}
         {{- if .Values.deployment.secrets }}
         {{- range .Values.deployment.secrets }}
