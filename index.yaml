@@ -1,16 +1,29 @@
 apiVersion: v1
 entries:
+  adguard:
+  - apiVersion: v1
+    appVersion: 0.107.9
+    created: "2022-08-06T22:57:51.892442023Z"
+    description: A Helm chart to install adguardhome
+    digest: c6c97c59f27311ae5298ccb73a713d1b25712c21bbc66fe6ad4c623392d88e75
+    home: https://github.com/nd0905/helm-charts
+    maintainers:
+    - name: nd0905
+    name: adguard
+    urls:
+    - https://github.com/nd0905/helm-charts/releases/download/adguard-0.1.0/adguard-0.1.0.tgz
+    version: 0.1.0
   vaultwarden:
   - apiVersion: v1
     appVersion: 1.25.2
-    created: "2022-08-06T19:22:23.718043878Z"
+    created: "2022-08-06T22:57:52.001787128Z"
     description: A Helm chart to install vaultwarden
-    digest: 4de31ad96b261c777ccf5a1f6c275ae5a6096029c8ca19f76388781ac26db83f
+    digest: 0b8fb6650b471b936bd4eec3cf961186435189702a49ca511b1670bcb31067c2
     home: https://github.com/nd0905/helm-charts
     maintainers:
     - name: nd0905
     name: vaultwarden
     urls:
-    - https://github.com/nd0905/helm-charts/releases/download/vaultwarden-0.1.0/vaultwarden-0.1.0.tgz
-    version: 0.1.0
-generated: "2022-08-06T19:22:23.491210399Z"
+    - https://github.com/nd0905/helm-charts/releases/download/vaultwarden-0.1.1/vaultwarden-0.1.1.tgz
+    version: 0.1.1
+generated: "2022-08-06T22:57:51.758806572Z"
