@@ -1,0 +1,67 @@
+{{- $root := . -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "twitch-miner.fullname" . }}
+  labels:
+{{ include "twitch-miner.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "twitch-miner.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "twitch-miner.fullname" . }}
+    spec:
+      containers:
+      - name: {{ template "twitch-miner.name" . }}
+        image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        command: [ "/bin/sh", "-c", "cat /tmp/app/run.py > /usr/src/app/run.py; cd /usr/src/app; python run.py"]
+        env:
+        {{- range $key, $val := .Values.deployment.enviroment }}
+          - name: {{ $key | upper }}
+            value: {{ $val | quote }}
+        {{- end}}
+        ports:
+        {{- range $name, $options:= .Values.service.ports }}
+        - name: {{ $name }}
+          containerPort: {{ $options.target_port }}
+          protocol: {{ $options.protocol }}
+        {{- end }}
+        volumeMounts:
+        {{- range $name, $options:= .Values.storage }}
+        - mountPath: {{ $options.path }}
+          name: {{ $name }}-storage
+        {{- end}}
+        - mountPath: "/tmp/app"
+          name: conf-volume
+      {{- with .Values.deployment.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      volumes:
+      {{- range $name, $options:= .Values.storage }}
+      - name: {{ $name }}-storage
+        persistentVolumeClaim:
+          claimName: {{ template "twitch-miner.fullname" $ }}-{{ $name }}
+      {{- end}}
+      - name: conf-volume
+        configMap:
+          name: {{ template "twitch-miner.fullname" . }}-config
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.deployment.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    
