@@ -16,7 +16,7 @@ deployment:
 
 # Should not be changed
 service:
-  type: LoadBalancer
+  type: NodePort
   ports:
     http:
       port: 80
