@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "twitch-miner.fullname" . }}-config
+  labels:
+{{ include "twitch-miner.labels" . | indent 4 }}
+data:
+  run.py: {{ .Values.config | quote }}

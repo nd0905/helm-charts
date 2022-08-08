@@ -1,0 +1,8 @@
+apiVersion: v1
+appVersion: 2.1.1
+description: A Helm chart to install twitch-channel-points-miner-v2
+name: twitch-miner
+version: 0.1.0
+home: https://github.com/nd0905/helm-charts
+maintainers:
+- name: nd0905
