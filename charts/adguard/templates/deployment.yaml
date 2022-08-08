@@ -20,7 +20,6 @@ spec:
       - name: {{ template "adguard.name" . }}
         image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
-        command: ["sh -c cat /tmp/ag-conf/AdGuardHome.yaml > /opt/adguardhome/conf/AdGuardHome.yaml; /opt/adguardhome/AdGuardHome --no-check-update -c /opt/adguardhome/conf/AdGuardHome.yaml -h 0.0.0.0 -w /opt/adguardhome/work" ]
         ports:
         {{- range $name, $options:= .Values.service.ports }}
         - name: {{ $name }}
@@ -32,8 +31,9 @@ spec:
         - mountPath: {{ $options.path }}
           name: {{ $name }}-storage
         {{- end}}
-        - mountPath: /tmp/ag-conf
+        - mountPath: /opt/adguardhome/conf/AdGuardHome.yaml
           name: conf-volume
+          subPath: AdGuardHome.yaml
       {{- with .Values.deployment.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
@@ -46,6 +46,9 @@ spec:
       {{- end}}
       - name: conf-volume
         configMap:
+          items:
+            - key: AdGuardHome.yaml
+              path: AdGuardHome.yaml
           name: adguard-config
       {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
