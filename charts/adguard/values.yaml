@@ -33,11 +33,6 @@ storage:
     path: "/opt/adguardhome/work"
     # The maximum size of the persisted data
     size: 10Gi
-  config:
-    # Where to store persistent data
-    path: "/opt/adguardhome/conf"
-    # The maximum size of the persisted data
-    size: 50Mi
 
 # config -- AdGuard Home configuration. For a full list of options see https://github.com/AdguardTeam/AdGuardHome/wiki/Configuration.
 config: |
