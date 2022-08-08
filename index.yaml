@@ -1,29 +1,16 @@
 apiVersion: v1
 entries:
-  adguard:
+  twitch-miner:
   - apiVersion: v1
-    appVersion: 0.107.9
-    created: "2022-08-06T22:57:51.892442023Z"
-    description: A Helm chart to install adguardhome
-    digest: c6c97c59f27311ae5298ccb73a713d1b25712c21bbc66fe6ad4c623392d88e75
+    appVersion: 2.1.1
+    created: "2022-08-08T04:01:45.748527147Z"
+    description: A Helm chart to install twitch-channel-points-miner-v2
+    digest: 653434e2e33e97fc1578cf7f5ae7b0cae78da66284cc6f1b3ad62a0096997335
     home: https://github.com/nd0905/helm-charts
     maintainers:
     - name: nd0905
-    name: adguard
+    name: twitch-miner
     urls:
-    - https://github.com/nd0905/helm-charts/releases/download/adguard-0.1.0/adguard-0.1.0.tgz
+    - https://github.com/nd0905/helm-charts/releases/download/twitch-miner-0.1.0/twitch-miner-0.1.0.tgz
     version: 0.1.0
-  vaultwarden:
-  - apiVersion: v1
-    appVersion: 1.25.2
-    created: "2022-08-06T22:57:52.001787128Z"
-    description: A Helm chart to install vaultwarden
-    digest: 0b8fb6650b471b936bd4eec3cf961186435189702a49ca511b1670bcb31067c2
-    home: https://github.com/nd0905/helm-charts
-    maintainers:
-    - name: nd0905
-    name: vaultwarden
-    urls:
-    - https://github.com/nd0905/helm-charts/releases/download/vaultwarden-0.1.1/vaultwarden-0.1.1.tgz
-    version: 0.1.1
-generated: "2022-08-06T22:57:51.758806572Z"
+generated: "2022-08-08T04:01:45.488872806Z"
