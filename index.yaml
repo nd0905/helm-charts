@@ -1,16 +1,16 @@
 apiVersion: v1
 entries:
-  twitch-miner:
+  adguard:
   - apiVersion: v1
-    appVersion: 2.1.1
-    created: "2022-08-08T04:01:45.748527147Z"
-    description: A Helm chart to install twitch-channel-points-miner-v2
-    digest: 653434e2e33e97fc1578cf7f5ae7b0cae78da66284cc6f1b3ad62a0096997335
+    appVersion: 0.107.9
+    created: "2022-08-09T02:53:30.458482391Z"
+    description: A Helm chart to install adguardhome
+    digest: 095e5d0a0d265cb5acc534e880ebd9e28af86991a23f358b92dba8ebb80d12af
     home: https://github.com/nd0905/helm-charts
     maintainers:
     - name: nd0905
-    name: twitch-miner
+    name: adguard
     urls:
-    - https://github.com/nd0905/helm-charts/releases/download/twitch-miner-0.1.0/twitch-miner-0.1.0.tgz
-    version: 0.1.0
-generated: "2022-08-08T04:01:45.488872806Z"
+    - https://github.com/nd0905/helm-charts/releases/download/adguard-0.1.1/adguard-0.1.1.tgz
+    version: 0.1.1
+generated: "2022-08-09T02:53:30.061489636Z"
